@@ -27,8 +27,8 @@
 ]
 
 \begin{abstract}
-Nonlinear independent component analysis and causal representation learning come with identifiability theorems: under certain assumptions, the latent sources of an observed mixture are recovered up to ordering, sign and scale.
-Applied to observational brain recordings, the recovered components are reported as latent sources.
+Recovering the hidden causes of a measured signal from the signal alone is the promise behind causal representation learning, and its identifiability theorems state when that promise holds: under certain assumptions, the latent sources of an observed mixture are recovered up to ordering, sign and scale.
+Brain recordings are where this promise matters most, and components recovered from observational recordings are routinely reported as latent sources.
 We ask against what such a claim is checked.
 No observational recording carries a reference for its latent sources that is independent of the method; the claim can be refuted, when a necessary condition of the theorem fails in the data, but it cannot be confirmed.
 We make this concrete on scalp EEG.
@@ -49,8 +49,9 @@ Identifiability claims on observational recordings therefore require a ground-tr
 \input{sections/07_discussion}
 
 \section*{AI Use Statement}
-A large language model (Anthropic Claude, through Claude Code) assisted this work as an editorial and coding assistant: it edited candidate text from the authors' notes and results, which the authors revised. Authors used LLM for some peripheral decisions such as reporting details and metrics common in literature. 
-The position, the experimental design, the execution and every decision about content are result of the authors' work for more than two year.
+A large language model (Anthropic Claude, through Claude Code) assisted this work as an editorial and coding assistant: it drafted candidate text from the authors' notes and results, which the authors revised; it tightened prose; and it wrote and refactored analysis and plotting code under the authors' direction.
+The position, the experimental design, the execution and interpretation of every experiment, the figures and every decision about content are the authors'.
+Every model-generated change was reviewed by the authors before inclusion.
 
 \acknowledgments{This work is supported by IVADO. We thank Guillaume Dumas, Pooneh Mousavi, Dhanya Sridhar and Irina Rish for helpful discussions. This research was enabled in part by compute resources provided by Mila (\url{https://mila.quebec}) and the Digital Research Alliance of Canada (\url{https://alliancecan.ca}). The implementation and writing was assisted by AI. M.R-P.\ is fully responsible for the scientific content and integrity of this paper.}
 
@@ -61,7 +62,7 @@ The position, the experimental design, the execution and every decision about co
 
 \appendix
 \onecolumn
-\aistatstitle{Latent-Source Identifiability from Observational Neural Recordings Is Not Confirmable:  Supplementary Materials}
+\aistatstitle{Latent-Source Identifiability from Observational Neural Recordings Is Not Confirmable:\\ Supplementary Materials}
 \input{sections/appendix}
 
 \end{document}
