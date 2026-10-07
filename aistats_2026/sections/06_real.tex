@@ -1,0 +1,25 @@
+\section{Real scalp EEG}
+\label{sec:real}
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=0.86\textwidth]{fig3_real_eeg.pdf}
+  \caption{Real EEG. (a) The nine BCI IV-2a subjects placed on the modulation axis of Figure~\ref{fig:axes}d by their observed co-modulation fraction (ticks: 1--40~Hz dark, 8--30~Hz light; shaded: their 1--40~Hz range), against the held-out recovery of the benchmark along the same axis (mean and bootstrap 95\% interval over 5 seeds). (b) Four-class cue decoding accuracy from the per-trial log-variance of unsupervised components fit without labels on three runs and scored on the other three; one point per subject, bar at the median, label-permutation 95th percentile dashed, chance dotted; supervised CSP is the label-aware ceiling. (c) Agreement between the same method fit on different runs. Protocols in Appendix~\ref{app:real}.}
+  \label{fig:real}
+\end{figure*}
+
+Two things can be done with the recording itself.
+
+\paragraph{The testable assumption holds.}
+The co-modulation fraction of Section~\ref{sec:benchmark} is computed on the nine subjects of BCI IV-2a exactly as on the benchmark (Appendix~\ref{app:placement}).
+Figure~\ref{fig:real}a places them on axis (d): the subjects sit in the left half of the axis, in a broad band (1--40~Hz) as in the motor band (8--30~Hz), away from the shared-gain regime in which the segment-based methods fail on the benchmark.
+The rank condition is therefore not refuted on this data, and a TCL recovery reported on these recordings would pass the only check the recording allows.
+This is exactly the situation the paper is about: the check that can be run is passed, and the failures that remain (drift, and nuisance processes with a spatial pattern of their own, Appendix~\ref{app:robust}) are the ones that cannot be seen.
+
+\paragraph{The cue is a reference, and the components do not carry it.}
+BCI IV-2a has an experimental manipulation: a randomised four-class motor-imagery cue with a known cortical locus.
+We fit each unsupervised method on three runs of a subject without labels and score its components on the other three by how well their per-trial log-variance decodes the cue (Appendix~\ref{app:cue}).
+A label-permutation null and a supervised ceiling, common spatial patterns (CSP), bracket the result.
+TCL's components decode the cue barely above the permutation null and change substantially between fits on different runs (Figure~\ref{fig:real}b,c).
+The linear baselines carry more cue information than TCL, the dependence-based PCL carries the most among the unsupervised methods, and CSP shows that the information is in the recording.
+On real EEG the segment-based method found something, and it is not the task-related source.

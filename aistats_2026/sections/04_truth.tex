@@ -1,0 +1,31 @@
+\section{With the sources known}
+\label{sec:truth}
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=\textwidth]{fig1_axes.pdf}
+  \caption{Held-out recovery along five EEG-relevant stress axes; harder to the right in every panel. Top row: permutation MCC against the signed sources (PCA, FastICA, iVAE, PCL), with the rotation reference (dashed), the score of a method that recovers the source subspace but not the sources. Bottom row: linear-invariant CCA-MCC against $|s|$ for the energy-like features of TCL, TCL after per-segment demeaning of the observations (dashed) and CEBRA-Time. Grey band: measured chance level (95th percentile of surrogate components). Error bars: bootstrap 95\% intervals over 20 seeds (PCA, FastICA, TCL), 5 seeds (iVAE, PCL, demeaned TCL, panel d, $M=32$) or 3 seeds (CEBRA). (a) $1/f$ background; (b) pointwise mixing nonlinearity; (c) first-order source coupling; (d) co-modulation fraction of the segment-wise modulation, from source-specific profiles to a single shared gain, with the range of nine BCI IV-2a subjects shaded; (e) number of sources against 22 channels, each $M$ with its own trained generator and learned mixing. Numbers in Table~\ref{tab:full}.}
+  \label{fig:axes}
+\end{figure*}
+
+Figure~\ref{fig:axes} and Table~\ref{tab:full} give the result.
+On clean linear mixing every method except PCA recovers the sources; PCA sits on the rotation reference everywhere, it finds the subspace and never separates it, which is why it serves as the subspace reference.
+Pointwise nonlinearity and source coupling, the two axes closest to the classical theory, cost the nonlinear methods little.
+The breaks are elsewhere, and each has a mechanism.
+
+\paragraph{Drift feeds the segment classifier.}
+As the $1/f$ background grows, TCL falls to the chance band while FastICA is barely affected (Figure~\ref{fig:axes}a).
+The failure is not noise as such.
+Power below the segment rate shifts the mean of each segment, the classifier learns segment identity from those shifts, and its features track drift rather than source variance; removing the per-segment mean of the observations restores TCL to its clean level down to 10~dB (dashed line, Appendix~\ref{app:robust}).
+PCL fails from the other side: $1/f$ noise is temporally dependent, so it feeds a dependence-based objective, and PCL's own pair-discrimination accuracy rises along the axis while its recovery falls.
+CEBRA, whose positive pairs are short time offsets, inherits TCL's profile without any labels.
+
+\paragraph{A shared modulation identifies only total power.}
+Along axis (d) every nonlinear method declines as the co-modulation fraction approaches one, TCL to the level the rank argument of Appendix~\ref{app:tcl} predicts: with one shared profile the modulation matrix has rank one, only $\|s\|^2$ is identified, and the individual sources collapse while the group energy is still decoded from the features (Appendix~\ref{app:robust}).
+FastICA degrades too, since a common gain makes near-Gaussian sources spherically symmetric.
+More data does not move these cells, nor the stationary one; the failure is in the assumption, not in the sample (Figure~\ref{fig:robust}b).
+
+\paragraph{Sources against channels.}
+As $M$ approaches $D$ the nonlinear methods fall towards the rotation reference, and past $D$ every method falls (Figure~\ref{fig:axes}e).
+For TCL this is a finite-sample failure: with sixteen times more data its score at $M = D$ rises to that of the clean cell (Figure~\ref{fig:robust}b).
+For the linear methods the limit is physical rather than statistical: a sphere-model leadfield in place of the learned mixing reproduces every ordering of Figure~\ref{fig:axes} and steepens this decline through its conditioning (Figure~\ref{fig:robust}d, Appendix~\ref{app:robust}).

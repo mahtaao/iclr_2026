@@ -1,0 +1,32 @@
+\section{Introduction}
+\label{sec:intro}
+
+Two people speak at a party and two microphones record; each microphone hears a mixture of both voices.
+Recovering the speakers from the mixtures is the canonical motivation of blind source separation, and independent component analysis (ICA), nonlinear ICA and causal representation learning have formalised the conditions under which it is possible \citep{hyvarinen2000ica,hyvarinen1999nonlinear,hyvarinen2016tcl,khemakhem2020ivae,scholkopf2021toward,kugelgen2023nonparametric}.
+Under those conditions the latent sources are \textit{identifiable} from the observations up to trivial indeterminacies.
+The same intuition has been carried into neuroscience: a scalp electrode hears a mixture of many cortical and non-cortical sources, and a method that unmixes the recording into interpretable components is read as recovering something close to the generators of cognition \citep{makeig1996ica,michel2019eeg,hyvarinen2016tcl,halva2021snica}.
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=0.9\textwidth]{fig0_concept.pdf}
+  \caption{Three routes to a latent-source claim. (A) On an observational recording the recovered components $\hat{s}$ can be compared to nothing that is independent of the method; inverse solutions, decoders and concurrent recordings each encode a model of their own. (B) A benchmark whose sources are known by construction closes the loop with a computable recovery score. (C) An experimental manipulation $u$ (a cue, a stimulation, a closed-loop task) yields a prediction that the recovered components must satisfy.}
+  \label{fig:concept}
+\end{figure*}
+
+In this work we ask a question that this practice leaves open: when an identifiability method is applied to an observational recording and a set of recovered sources is reported, against what is the claim checked?
+The party analogy assumes a listener who can hear one speaker at a time.
+For the brain no such listener exists.
+Source reconstructions encode their own model, decoders return a function of the components together with the decoder, and no recording modality provides the latent sources themselves (Figure~\ref{fig:concept}A).
+The identifiability claim is therefore in an unusual position.
+It can be \textit{refuted}: every identifiability theorem has necessary conditions on the data, and some of them can be checked on the recording.
+However, it cannot be \textit{confirmed}: a method that satisfies its own objective may have done so on a nuisance that carries none of the sources, and nothing in the recording distinguishes the two cases.
+
+We make this position concrete on scalp electroencephalography (EEG), the modality where the problem is most acute (many sources, few channels, a strong nonstationary background) and for which nonlinear-ICA identifiability methods have been proposed on non-invasive recordings \citep{hyvarinen2016tcl,halva2021snica}.
+Our contributions are the following.
+\begin{itemize}\setlength{\itemsep}{1pt}
+  \item A benchmark whose sources are known by construction: a recurrent generator trained on EEG, mixed into synthetic recordings and stressed along five axes that distinguish EEG from the idealised mixing problem; every score comes with a measured chance level and a subspace reference (Section~\ref{sec:benchmark}).
+  \item With the sources known, each identifiability route has an EEG nuisance that satisfies its objective without carrying the sources, slow drift for segment-based methods and $1/f$ autocorrelation for dependence-based ones; a modulation shared by all sources and a source count near the channel count defeat every method (Section~\ref{sec:truth}, Figure~\ref{fig:axes}).
+  \item With the sources unknown, no quantity a practitioner can compute has a stable relation to recovery; the diagnostic the methods themselves report is anti-diagnostic (Section~\ref{sec:blind}, Figure~\ref{fig:diag}).
+  \item On real EEG the one checkable assumption holds, so the claim is not refuted; scored against the experimental cue, the only reference the recording offers, the segment-based method's components carry no information about it (Section~\ref{sec:real}, Figure~\ref{fig:real}).
+\end{itemize}
+Taken together, these results support one requirement: an identifiability claim on observational recordings should be accompanied by a benchmark with the stresses of the modality, or by an experimental manipulation that yields a testable prediction (Figure~\ref{fig:concept}B,C).

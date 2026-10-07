@@ -1,0 +1,67 @@
+\documentclass[twoside]{article}
+
+\usepackage{aistats2026}
+% Submission: anonymous (default). Camera-ready: \usepackage[accepted]{aistats2026}.
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[round]{natbib}
+\renewcommand{\bibname}{References}
+\renewcommand{\bibsection}{\subsubsection*{\bibname}}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,allcolors=black]{hyperref}
+\usepackage{url}
+\graphicspath{{figures/}}
+
+\begin{document}
+
+\runningtitle{Identifiability from Observational Neural Recordings Is Refutable but Not Confirmable}
+
+\twocolumn[
+\aistatstitle{Latent-Source Identifiability from Observational Neural Recordings\\ Is Refutable but Not Confirmable}
+\aistatsauthor{Anonymous Authors}
+\aistatsaddress{Anonymous Institution}
+]
+
+\begin{abstract}
+Nonlinear independent component analysis and causal representation learning come with identifiability theorems: under stated assumptions, the latent sources of an observed mixture are recovered up to trivial indeterminacies.
+Applied to observational brain recordings, the recovered components are reported as latent sources.
+We ask against what such a claim is checked.
+No observational recording carries a reference for its latent sources that is independent of the method; the claim can be refuted, when a necessary condition of the theorem fails in the data, but it cannot be confirmed.
+We make this concrete on scalp EEG.
+We build a benchmark whose sources are known by construction, a recurrent generator trained on EEG and stressed along the axes that distinguish EEG from idealised mixing, and evaluate six unsupervised methods against a measured chance level and a subspace reference.
+With the sources known, each identifiability route has an EEG nuisance that satisfies its objective without carrying the sources: slow drift for segment-based methods, $1/f$ autocorrelation for dependence-based ones.
+With the sources unknown, no quantity a practitioner can compute has a stable relation to recovery.
+On real EEG the one testable assumption holds, so the claim is not refuted; scored against the experimental cue, the only reference the recording offers, the segment-based method's components carry no information about it.
+Identifiability claims on observational recordings therefore require a ground-truth benchmark with the stresses of the modality or an experimental manipulation.
+\end{abstract}
+
+\input{sections/01_introduction}
+\input{sections/02_argument}
+\input{sections/03_benchmark}
+\input{sections/04_truth}
+\input{sections/05_blind}
+\input{sections/06_real}
+\input{sections/07_discussion}
+
+\section*{AI Use Statement}
+A large language model (Anthropic Claude, through Claude Code) assisted this work as an editorial and coding assistant: it drafted candidate text from the authors' notes and results, which the authors revised; it tightened prose; and it wrote and refactored analysis and plotting code under the authors' direction.
+The position, the experimental design, the execution and interpretation of every experiment, the figures and every decision about content are the authors'.
+Every model-generated change was reviewed by the authors before inclusion.
+
+\acknowledgments{This work is supported by IVADO. We thank Guillaume Dumas, Pooneh Mousavi, Dhanya Sridhar and Irina Rish for helpful discussions. This research was enabled in part by compute resources provided by Mila (\url{https://mila.quebec}) and the Digital Research Alliance of Canada (\url{https://alliancecan.ca}). The writing and coding was assisted by Claude Code, Anthropic's agentic coding tool. M.R-P.\ is fully responsible for the scientific content and integrity of this paper.}
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\input{sections/checklist}
+
+\appendix
+\onecolumn
+\aistatstitle{Latent-Source Identifiability from Observational Neural Recordings Is Refutable but Not Confirmable:\\ Supplementary Materials}
+\input{sections/appendix}
+
+\end{document}

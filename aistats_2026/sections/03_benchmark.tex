@@ -1,0 +1,27 @@
+\section{A benchmark with known sources}
+\label{sec:benchmark}
+
+\paragraph{Generator.}
+We train a shallow piecewise-linear recurrent neural network (shPLRNN; \citealp{brenner2024shPLRNN,hess2023gtf}) on the 22-channel BCI Competition IV-2a EEG \citep{brunner2008bci,tangermann2012review}, with $M$ latent states and a learned linear observation model $x = Wz$.
+The trained model is used strictly as a generator, in the sense of a formal surrogate of the system it was fitted to \citep{durstewitz2023reconstructing}: its stochastic free run is the ground-truth source signal $s$ and its $W$ the mixing.
+One generator is trained per source count $M \in \{2, 4, 8, 16, 22, 32\}$; the clean operating point is $M = 4$ sources in $D = 22$ channels.
+Every cell draws a training and a held-out trajectory from the same generator; methods are fit on the first and scored on the second (Appendix~\ref{app:protocol}).
+
+\paragraph{Stresses.}
+Each axis violates one assumption in a controlled way, harder to the right in Figure~\ref{fig:axes}: (a) a $1/f$ background at decreasing signal-to-noise ratio; (b) a pointwise nonlinearity after mixing; (c) first-order coupling between the sources; (d) the diversity of the segment-wise modulation, from each source following its own variance profile to one gain shared by all; (e) the number of sources against the fixed channel count, past the point where sources outnumber channels.
+Axis (d) is parametrised by an observable quantity, the \textit{co-modulation fraction}: the fraction of the segment-to-segment change of the channel covariance that follows a single spatial pattern (Appendix~\ref{app:placement}).
+It can be computed on any recording, which is what lets real EEG be placed on the axis in Section~\ref{sec:real}.
+
+\paragraph{Methods.}
+PCA and FastICA \citep{hyvarinen1999fastica} are the linear baselines; FastICA is the positive control for linear mixing of independent sources.
+TCL and iVAE identify through segment-wise nonstationarity, PCL through temporal dependence, and CEBRA \citep{schneider2023cebra} is a current neural-data method whose time-contrastive objective likewise rests on local temporal structure.
+All methods receive the same 20 segments and return $M$ components; the iVAE uses per-channel standardised inputs with a unit-variance Gaussian likelihood.
+Implementation details are given in Appendix~\ref{app:methods}.
+
+\paragraph{Scores and references.}
+Methods that return source estimates are scored by the permutation-matched mean correlation with the signed sources (MCC; \citealp{hyvarinen2016tcl,khemakhem2020ivae}).
+TCL and CEBRA return energy-like features, since under variance modulation TCL identifies $s^2$ up to a linear map (Appendix~\ref{app:tcl}); they are scored by the linear-invariant canonical-correlation MCC against $|s|$, and the two scores are read within a row of Figure~\ref{fig:axes}, never across.
+Two references accompany every score.
+The \textit{chance band} is the 95th percentile of the score of surrogate components that are statistically matched to the sources but independent of them, measured per cell.
+The \textit{rotation reference} is the score of the true sources under a random rotation, i.e.\ of a method that recovers the source subspace but does not separate it; a permutation MCC at that level is subspace recovery, not identification (Appendix~\ref{app:scores}).
+Error bars throughout are bootstrap 95\% intervals over seeds.

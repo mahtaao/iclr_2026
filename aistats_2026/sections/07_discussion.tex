@@ -1,0 +1,14 @@
+\section{Discussion}
+\label{sec:discussion}
+
+The asymmetry of Section~\ref{sec:argument} is not specific to EEG: no observational recording carries a reference for its latent sources that is independent of the method used to recover them.
+What is specific to a modality is the set of nuisances that satisfy an identifiability objective without carrying the sources, and a benchmark has to contain them.
+Synthetic benchmarks are already the unit of empirical claim in disentanglement and nonlinear ICA \citep{locatello2019challenging,hyvarinen2016tcl,khemakhem2020ivae}; what the standard generators lack are the stresses of the modality.
+For scalp EEG and MEG, which share the many-to-one geometry and the nonstationary background, these are drift below the segment rate, $1/f$ autocorrelation, co-modulation of all sources and a source count beyond the channel count.
+The benchmark of Section~\ref{sec:benchmark} varies each of them, and its conclusions are unchanged when the generator is retrained to reproduce the spectrum of real EEG (Appendix~\ref{app:realism}).
+
+In light of this, an identifiability claim on observational recordings should come with one of two things.
+Either a recovery score on a benchmark with the stresses of the modality, reported next to a measured chance level and a subspace reference, as in Figure~\ref{fig:axes}; or an experimental manipulation that yields a prediction the recovered components must satisfy, as in Figure~\ref{fig:real}b.
+Both are available today; the cue test above uses a public dataset and no new recording.
+The methods themselves remain useful for denoising, dimensionality reduction and feature extraction, and none of these uses needs an identifiability claim.
+What changes is the claim that is admissible: not that the latent sources were recovered, but that a stated condition was not refuted, or that a stated prediction was met.
