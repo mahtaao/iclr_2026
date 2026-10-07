@@ -65,7 +65,7 @@ A method that recovers the source subspace without separating it scores at this 
 \clearpage
 \section{Full results}
 \label{app:tables}
-Tables~\ref{tab:full} and \ref{tab:mod} list every cell of Figures~\ref{fig:axes} and \ref{fig:real}a.
+Tables~\ref{tab:full} and \ref{tab:mod} list every cell of Figure~\ref{fig:axes}.
 
 \begin{table}[h]\centering\small
 \caption{Held-out recovery on the benchmark of Figure~\ref{fig:axes}. PCA, FastICA and TCL: mean over 20 seeds with bootstrap 95\% interval; iVAE, PCL and demeaned TCL: mean over 5 seeds. Permutation MCC against the signed sources for PCA, FastICA, iVAE and PCL (rotation reference in the last column); CCA-MCC against $|s|$ for TCL. Null: 95th percentile of the chance level over surrogate constructions and scores.}
@@ -102,7 +102,7 @@ $M$ ($D = 22$) & 2 & 0.90 [0.85, 0.93] & 0.98 [0.98, 0.99] & 0.98 & 0.84 & 0.90 
 \end{table}
 
 \begin{table}[h]\centering\small
-\caption{Modulation-diversity axis (Figure~\ref{fig:axes}d and Figure~\ref{fig:real}a; $M = 4$, 20~dB Gaussian noise, 5 seeds): held-out recovery against the observed co-modulation fraction of the segment-wise modulation. $a$ is the source-specific weight of the profile, $r$ the number of distinct profiles. The nine BCI IV-2a subjects have shares of 0.22--0.76 at 1--40~Hz and 0.24--0.42 at 8--30~Hz.}
+\caption{Modulation-diversity axis (Figure~\ref{fig:axes}d; $M = 4$, 20~dB Gaussian noise, 5 seeds): held-out recovery against the observed co-modulation fraction of the segment-wise modulation. $a$ is the source-specific weight of the profile, $r$ the number of distinct profiles. The nine BCI IV-2a subjects have shares of 0.22--0.76 at 1--40~Hz and 0.24--0.42 at 8--30~Hz.}
 \label{tab:mod}
 \begin{tabular}{lcccccccc}\toprule
 cell & co-modulation fraction & rank & PCA & FastICA & iVAE & PCL & TCL & TCL vs $s^2$ \\ \midrule
@@ -180,8 +180,9 @@ These sources are more strongly inter-correlated than the main benchmark's, so t
 \section{Real-EEG protocols}
 \label{app:real}
 
-\subsection{Placing real EEG on the modulation axis}
+\subsection{Observable properties of the segment-wise modulation}
 \label{app:placement}
+\paragraph{One-pattern share.}
 The recording is cut into the 20 contiguous segments TCL uses.
 Each segment's channel covariance is whitened by the mean covariance and mapped to the tangent space by the matrix logarithm; the 20 tangent vectors are centred and their singular values taken.
 The co-modulation fraction is the fraction of the segment-to-segment change that follows the dominant pattern, after subtracting the mean spectrum of 20 stationary surrogates (multivariate phase randomisations of the whole recording, which keep every auto- and cross-spectrum and remove the nonstationarity).
@@ -189,13 +190,43 @@ A single shared profile gives a share of one.
 The statistic is computed identically on every synthetic cell of axis (d) and on the nine BCI IV-2a subjects (all six motor-imagery runs, 22 channels, 1--40~Hz and 8--30~Hz).
 Real subjects have shares of 0.22--0.76 (median 0.39) at 1--40~Hz and 0.24--0.42 (median 0.32) at 8--30~Hz; on the benchmark TCL falls below $0.5$ only at shares of $0.95$ and above.
 
+\paragraph{Magnitude.}
+The magnitude of the modulation is the standard deviation, across segments and components, of the per-segment log-variance in dB.
+On the benchmark it is the nominal standard deviation of the log-variance profile: $4.3$~dB for the $\mathrm{Exp}(1)$ law of the main sweep, and $2.2$, $1.1$ and $0.4$~dB for the cells of Figure~\ref{fig:real}a, obtained by scaling the log-variance profiles by $0.5$, $0.25$ and $0.1$ with everything else unchanged (Table~\ref{tab:mag}).
+On real EEG it is computed on four FastICA components of the 1--40~Hz recording of each subject, cut into 20, 200 or 2000 contiguous segments, with the estimation floor (the same statistic on white noise of the same length) removed in quadrature; the two sides measure the same quantity with different estimators.
+Across the nine subjects the median magnitude is $0.4$, $1.0$ and $2.0$~dB at 20, 200 and 2000 segments.
+
+\begin{table}[h]\centering\small
+\caption{Held-out recovery against the magnitude of the segment-wise modulation ($M = 4$, 20~dB Gaussian noise, 5 seeds; Figure~\ref{fig:real}a). Source-specific profiles ($a = 1$) for all methods; TCL also at $a = 0.5$ and under one shared gain ($a = 0$).}
+\label{tab:mag}
+\begin{tabular}{lcccccc}\toprule
+magnitude (dB) & PCA & FastICA & iVAE & TCL & TCL, $a = 0.5$ & TCL, shared gain \\ \midrule
+0.4 & 0.64 & 0.72 & 0.60 & 0.31 & 0.29 & 0.26 \\
+1.1 & 0.65 & 0.81 & 0.65 & 0.47 & 0.45 & 0.32 \\
+2.2 & 0.68 & 0.95 & 0.75 & 0.75 & 0.65 & 0.33 \\
+4.3 & 0.71 & 0.97 & 0.92 & 0.89 & 0.84 & 0.32 \\
+\bottomrule\end{tabular}\end{table}
+
 \subsection{Scoring unsupervised components by the cue}
 \label{app:cue}
 Per subject, the six motor-imagery runs are band-passed to 8--30~Hz and resampled to 125~Hz.
-Each unsupervised method ($M = 4$ components) is fit on the continuous signal of runs 1--3 without labels and applied to runs 4--6.
+Each unsupervised method ($M = 4$ or $8$ components) is fit on the continuous signal of runs 1--3 without labels and applied to runs 4--6.
 Per trial, the log-variance of each component in the window 0.5--4~s after the cue is the feature; a four-class shrinkage LDA with five-fold cross-validation gives the decoding accuracy, and 20 label permutations its null distribution.
 Supervised one-versus-rest common spatial patterns on the same window give the label-aware ceiling.
 Run-to-run agreement is the mean canonical correlation between the components of two fits of the same method on runs 1--3 and 4--6, evaluated on the held-out runs.
+TCL is trained with 20, 200 and 2000 contiguous segments of the continuous signal (about 2~min, 12~s and 1.2~s per segment); the other methods do not depend on the segmentation (Table~\ref{tab:cue}).
+
+\begin{table}[h]\centering\small
+\caption{Real BCI IV-2a, median over nine subjects (Figure~\ref{fig:real}b,c). Cue decoding accuracy from all components and run-to-run agreement, for $M = 4$ / $M = 8$ components. The label-permutation 95th percentile is 0.31; supervised CSP decodes at 0.63.}
+\label{tab:cue}
+\begin{tabular}{llcccc}\toprule
+ & & \multicolumn{3}{c}{TCL, segments} & \\ \cmidrule(lr){3-5}
+ & & 20 & 200 & 2000 & PCA / FastICA / PCL \\ \midrule
+cue decoding & $M = 4$ & 0.35 & 0.37 & 0.41 & 0.43 / 0.37 / 0.44 \\
+ & $M = 8$ & 0.33 & 0.44 & 0.48 & 0.40 / 0.46 / 0.49 \\
+run-to-run agreement & $M = 4$ & 0.51 & 0.60 & 0.61 & 1.00 / 0.97 / 0.92 \\
+ & $M = 8$ & 0.48 & 0.57 & 0.70 & 0.99 / 0.95 / 0.85 \\
+\bottomrule\end{tabular}\end{table}
 
 \clearpage
 \section{TCL identifiability and the rank condition}
