@@ -35,12 +35,13 @@ We make this concrete on scalp EEG.
 We build a benchmark whose sources are known by construction, a recurrent generator trained on EEG and stressed along the axes that distinguish EEG from idealised mixing, and evaluate six unsupervised methods against a measured chance level and a subspace reference.
 With the sources known, each identifiability route has an EEG nuisance that satisfies its objective without carrying the sources: slow drift for segment-based methods, $1/f$ autocorrelation for dependence-based ones.
 With the sources unknown, no quantity a practitioner can compute has a stable relation to recovery.
-On real EEG the one testable assumption holds, so the claim is not refuted; scored against the experimental cue, the only reference the recording offers, the segment-based method's components carry no information about it.
+On real EEG the checkable rank condition holds, so the claim is not refuted; scored against the experimental cue, the only reference the recording offers, the segment-based method's components carry no more of it than the components of methods that never use the segments.
 Identifiability claims on observational recordings therefore require a ground-truth benchmark with the stresses of the modality or an experimental manipulation.
 \end{abstract}
 
 \input{sections/01_introduction}
 \input{sections/02_argument}
+\input{sections/02b_related}
 \input{sections/03_benchmark}
 \input{sections/04_truth}
 \input{sections/05_blind}

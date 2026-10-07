@@ -5,7 +5,8 @@
 We train a shallow piecewise-linear recurrent neural network (shPLRNN; \citealp{brenner2024shPLRNN,hess2023gtf}) on the 22-channel BCI Competition IV-2a EEG \citep{brunner2008bci,tangermann2012review}, with $M$ latent states and a learned linear observation model $x = Wz$.
 The trained model is used strictly as a generator, in the sense of a formal surrogate of the system it was fitted to \citep{durstewitz2023reconstructing}: its stochastic free run is the ground-truth source signal $s$ and its $W$ the mixing.
 One generator is trained per source count $M \in \{2, 4, 8, 16, 22, 32\}$; the clean operating point is $M = 4$ sources in $D = 22$ channels.
-Every cell draws a training and a held-out trajectory from the same generator; methods are fit on the first and scored on the second (Appendix~\ref{app:protocol}).
+Training on EEG supplies the mixing geometry (a learned $22 \times M$ observation matrix whose conditioning grows with $M$), a latent dimensionality per $M$ and process noise calibrated on the recordings; the stochastic free run is spectrally flatter than the latents the model encodes from EEG, and Appendix~\ref{app:realism} reruns the benchmark with a recipe whose free run matches the EEG spectrum.
+Every cell draws a training and a held-out trajectory of $T = 2000$ samples (8~s at 250~Hz, cut into 20 segments of 0.4~s) from the same generator; methods are fit on the first and scored on the second (Appendix~\ref{app:protocol}).
 
 \paragraph{Stresses.}
 Each axis violates one assumption in a controlled way, harder to the right in Figure~\ref{fig:axes}: (a) a $1/f$ background at decreasing signal-to-noise ratio; (b) a pointwise nonlinearity after mixing; (c) first-order coupling between the sources; (d) the diversity of the segment-wise modulation, from each source following its own variance profile to one gain shared by all; (e) the number of sources against the fixed channel count, past the point where sources outnumber channels.
@@ -15,7 +16,7 @@ It can be computed on any recording, which is what lets real EEG be placed on th
 \paragraph{Methods.}
 PCA and FastICA \citep{hyvarinen1999fastica} are the linear baselines; FastICA is the positive control for linear mixing of independent sources.
 TCL and iVAE identify through segment-wise nonstationarity, PCL through temporal dependence, and CEBRA \citep{schneider2023cebra} is a current neural-data method whose time-contrastive objective likewise rests on local temporal structure.
-All methods receive the same 20 segments and return $M$ components; the iVAE uses per-channel standardised inputs with a unit-variance Gaussian likelihood.
+All methods receive the same 20 segments and return $M$ components; the iVAE is trained on per-channel standardised inputs with the evidence lower bound under a unit-variance Gaussian likelihood.
 Implementation details are given in Appendix~\ref{app:methods}.
 
 \paragraph{Scores and references.}

@@ -1,0 +1,20 @@
+\section{Related work}
+\label{sec:related}
+
+\paragraph{How identifiability methods are validated on brain recordings.}
+TCL was introduced on MEG and validated by decoding the stimulus modality from its features \citep{hyvarinen2016tcl}; later nonlinear-ICA applications to MEG validate in the same way, by downstream classification \citep{halva2021snica,zhu2023unsupervised}.
+Decoding is route C of Figure~\ref{fig:concept}, and we use it ourselves in Section~\ref{sec:real}; the point of Sections~\ref{sec:argument} and \ref{sec:blind} is that it is necessary and not sufficient, since the decoder absorbs whatever error in the components is consistent with the label, and that it is the only one of the usual checks that does not share a model with the method.
+The nonlinear-ICA papers also validate on synthetic sources \citep{hyvarinen2016tcl,khemakhem2020ivae}, with generic sources and mixing; what those benchmarks lack is the nuisance structure of the modality, which is what breaks the objectives here.
+
+\paragraph{Ground-truth EEG simulation.}
+Simulated EEG with known sources is established in the source-localisation and connectivity literature: SEREEGA \citep{krol2018sereega}, EEGSourceSim \citep{barzegaran2019eegsourcesim}, neural-mass models \citep{jansen1995electroencephalogram} and pseudo-EEG connectivity benchmarks \citep{haufe2019simulation}.
+These generators place known sources through a forward model; none varies the quantities an identifiability objective depends on (the segment-wise modulation, its rank and magnitude, drift relative to the segment rate), and none reports a chance level or a subspace reference for a recovery score.
+The benchmark of Section~\ref{sec:benchmark} adds these, and a physics leadfield in place of its learned mixing reproduces its orderings (Appendix~\ref{app:robust}).
+
+\paragraph{Plausibility checks in EEG practice.}
+The ICA-on-EEG literature judges components by dipolarity \citep{delorme2012dipolar}, test-retest reliability and physiological plausibility.
+Each is a model of what a source should look like rather than a reference for what it is; Section~\ref{sec:blind} measures the analogous diagnostics, run-to-run and split-half agreement, against known recovery.
+
+\paragraph{Identifiability theory.}
+\citet{locatello2019challenging} showed that unsupervised disentanglement is impossible without inductive bias or supervision; the auxiliary-variable theorems \citep{hyvarinen2016tcl,hyvarinen2019auxiliary,khemakhem2020ivae} and interventional results \citep{kugelgen2023nonparametric} supply that structure as a property of the data.
+Our question is downstream of theirs: whether that property holds on a given observational recording can be refuted but not confirmed, and we measure both halves on EEG.
