@@ -12,8 +12,8 @@ A practitioner has none of Figure~\ref{fig:axes}.
 What they have is the fitted model: TCL's segment-classification accuracy, the iVAE's evidence lower bound, the agreement between two fits, the non-Gaussianity of FastICA's components, the explained variance of PCA.
 Figure~\ref{fig:diag} correlates each of these with the true held-out recovery across the cells of the benchmark, pooled and within each axis.
 No diagnostic keeps a stable relation to recovery.
-The accuracy that TCL papers report is anti-diagnostic in training: it is highest where recovery is lowest, because drift is easier to classify than source variance (Figure~\ref{fig:diag}b).
-The iVAE's bound tracks recovery on the coupling axis and anti-tracks it on the source-count axis (Figure~\ref{fig:diag}c).
+The training accuracy that TCL papers report points the wrong way: it is highest where recovery is lowest, because drift is easier to classify than source variance (Figure~\ref{fig:diag}b).
+The iVAE's bound rises with recovery on the coupling axis and falls with it on the source-count axis (Figure~\ref{fig:diag}c).
 Run-to-run agreement, the best pooled diagnostic, is uninformative inside the nonstationarity axis, where the real nuisance lives (Figure~\ref{fig:diag}d); an iVAE that is consistently wrong is consistent.
 The sign of every column of Figure~\ref{fig:diag}a depends on which stress the data happen to carry, so calibrating any of these diagnostics requires the benchmark, and the calibration flips across the stresses that a real recording mixes.
 This is the second half of Section~\ref{sec:argument} as a measurement.

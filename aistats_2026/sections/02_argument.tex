@@ -1,14 +1,14 @@
 \section{Refutable, not confirmable}
 \label{sec:argument}
 
-A scalp recording at $D$ electrodes is a projection of far more cortical and non-cortical current sources, smeared by volume conduction \citep{nunez2006electric,michel2019eeg}.
+A scalp recording at $D$ electrodes is a projection of far more cortical and non-cortical current sources, smeared by volume conduction (the spread of each source's signal through skull and scalp to many electrodes) \citep{nunez2006electric,michel2019eeg}.
 For any observed $x$, infinitely many source configurations are compatible with it, and source-localisation methods restore uniqueness only relative to a chosen prior.
 Testing a recovery therefore needs a reference that is independent of the method.
 The candidates on an observational recording are inverse solutions, behavioural decoding and concurrent recordings in another modality, and each encodes a model of its own: agreement between two model-based unmixings shows that the two models agree, a decoder absorbs any error in the components that is consistent with the readout, and intracranial contacts index cortical patches rather than the latent sources a nonlinear-ICA theorem speaks about.
-A component set that scores well on any of these can be a faithful recovery, a confound or a self-consistent artefact.
+A component set that scores well on any of these can be a faithful recovery, a confound or an artefact of the method itself.
 
 The theorems nevertheless leave something testable.
-Time-contrastive learning (TCL; \citealp{hyvarinen2016tcl}) requires that the segment-wise modulation of the sources spans the source space, i.e.\ that the modulation matrix has full column rank (Appendix~\ref{app:tcl}); iVAE \citep{khemakhem2020ivae} requires the analogous invertibility for its auxiliary variable; for second-order linear separation the exact condition is that no two sources have proportional variance profiles \citep{pham2001blind,kleinsteuber2013uniqueness}; permutation-contrastive learning (PCL; \citealp{hyvarinen2017pcl}) requires non-Gaussian innovations.
+Time-contrastive learning (TCL; \citealp{hyvarinen2016tcl}) requires that the sources change their variance across segments in linearly independent ways (not all together; the modulation matrix has full column rank, Appendix~\ref{app:tcl}); iVAE \citep{khemakhem2020ivae} requires the same of its auxiliary variable (the side information it conditions on, here the segment label); for second-order linear separation the exact condition is that no two sources have proportional variance profiles \citep{pham2001blind,kleinsteuber2013uniqueness}; permutation-contrastive learning (PCL; \citealp{hyvarinen2017pcl}) requires non-Gaussian innovations.
 If all sources always get louder together, the modulation matrix has rank one and only the total power is identified (Appendix~\ref{app:tcl}).
 This is visible in the segment covariances of the recording itself, with no ground truth, and it refutes the claim.
 What no recording can supply is the converse.

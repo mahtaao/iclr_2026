@@ -19,8 +19,8 @@ All methods receive the same 20 segments and return $M$ components; the iVAE use
 Implementation details are given in Appendix~\ref{app:methods}.
 
 \paragraph{Scores and references.}
-Methods that return source estimates are scored by the permutation-matched mean correlation with the signed sources (MCC; \citealp{hyvarinen2016tcl,khemakhem2020ivae}).
-TCL and CEBRA return energy-like features, since under variance modulation TCL identifies $s^2$ up to a linear map (Appendix~\ref{app:tcl}); they are scored by the linear-invariant canonical-correlation MCC against $|s|$, and the two scores are read within a row of Figure~\ref{fig:axes}, never across.
+Methods that return source estimates are scored by the mean correlation with the signed sources after each component is matched to its best source (MCC; \citealp{hyvarinen2016tcl,khemakhem2020ivae}).
+TCL and CEBRA return energy-like features (features that track the power of a source rather than its signed waveform), since under variance modulation TCL identifies $s^2$ up to a linear map (Appendix~\ref{app:tcl}); they are scored by the canonical-correlation MCC against $|s|$ (which is unchanged by any linear map of the features), and the two scores are read within a row of Figure~\ref{fig:axes}, never across.
 Two references accompany every score.
 The \textit{chance band} is the 95th percentile of the score of surrogate components that are statistically matched to the sources but independent of them, measured per cell.
 The \textit{rotation reference} is the score of the true sources under a random rotation, i.e.\ of a method that recovers the source subspace but does not separate it; a permutation MCC at that level is subspace recovery, not identification (Appendix~\ref{app:scores}).

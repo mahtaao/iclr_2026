@@ -3,7 +3,7 @@
 
 Two people speak at a party and two microphones record; each microphone hears a mixture of both voices.
 Recovering the speakers from the mixtures is the canonical motivation of blind source separation, and independent component analysis (ICA), nonlinear ICA and causal representation learning have formalised the conditions under which it is possible \citep{hyvarinen2000ica,hyvarinen1999nonlinear,hyvarinen2016tcl,khemakhem2020ivae,scholkopf2021toward,kugelgen2023nonparametric}.
-Under those conditions the latent sources are \textit{identifiable} from the observations up to trivial indeterminacies.
+Under those conditions the latent sources are \textit{identifiable} from the observations up to ordering, sign and scale.
 The same intuition has been carried into neuroscience: a scalp electrode hears a mixture of many cortical and non-cortical sources, and a method that unmixes the recording into interpretable components is read as recovering something close to the generators of cognition \citep{makeig1996ica,michel2019eeg,hyvarinen2016tcl,halva2021snica}.
 
 \begin{figure*}[t]
@@ -26,7 +26,7 @@ Our contributions are the following.
 \begin{itemize}\setlength{\itemsep}{1pt}
   \item A benchmark whose sources are known by construction: a recurrent generator trained on EEG, mixed into synthetic recordings and stressed along five axes that distinguish EEG from the idealised mixing problem; every score comes with a measured chance level and a subspace reference (Section~\ref{sec:benchmark}).
   \item With the sources known, each identifiability route has an EEG nuisance that satisfies its objective without carrying the sources, slow drift for segment-based methods and $1/f$ autocorrelation for dependence-based ones; a modulation shared by all sources and a source count near the channel count defeat every method (Section~\ref{sec:truth}, Figure~\ref{fig:axes}).
-  \item With the sources unknown, no quantity a practitioner can compute has a stable relation to recovery; the diagnostic the methods themselves report is anti-diagnostic (Section~\ref{sec:blind}, Figure~\ref{fig:diag}).
+  \item With the sources unknown, no quantity a practitioner can compute has a stable relation to recovery; the accuracy the methods themselves report rises exactly where recovery falls (Section~\ref{sec:blind}, Figure~\ref{fig:diag}).
   \item On real EEG the one checkable assumption holds, so the claim is not refuted; scored against the experimental cue, the only reference the recording offers, the segment-based method's components carry no information about it (Section~\ref{sec:real}, Figure~\ref{fig:real}).
 \end{itemize}
 Taken together, these results support one requirement: an identifiability claim on observational recordings should be accompanied by a benchmark with the stresses of the modality, or by an experimental manipulation that yields a testable prediction (Figure~\ref{fig:concept}B,C).
