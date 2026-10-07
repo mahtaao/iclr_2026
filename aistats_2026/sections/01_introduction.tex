@@ -2,9 +2,9 @@
 \label{sec:intro}
 
 Two people speak at a party and two microphones record; each microphone hears a mixture of both voices.
-Recovering the speakers from the mixtures is the canonical motivation of blind source separation, and independent component analysis (ICA), nonlinear ICA and causal representation learning have formalised the conditions under which it is possible \citep{hyvarinen2000ica,hyvarinen1999nonlinear,hyvarinen2016tcl,khemakhem2020ivae,scholkopf2021toward,kugelgen2023nonparametric}.
+Recovering the speakers from the mixtures is the canonical motivation of blind source separation, and independent component analysis (ICA), nonlinear ICA and causal representation learning have formalised the conditions under which it is possible \citep{hyvarinen2000ica,hyvarinen1999nonlinear,hyvarinen2016tcl,khemakhem2020ivae,hyvarinen2023patterns,pearl2009causality,scholkopf2021toward,kugelgen2023nonparametric}.
 Under those conditions the latent sources are \textit{identifiable} from the observations up to ordering, sign and scale.
-The same intuition has been carried into neuroscience: a scalp electrode hears a mixture of many cortical and non-cortical sources, and a method that unmixes the recording into interpretable components is read as recovering something close to the generators of cognition \citep{makeig1996ica,michel2019eeg,hyvarinen2016tcl,halva2021snica}.
+The same intuition has been carried into neuroscience: a scalp electrode hears a mixture of many cortical and non-cortical sources, and a method that unmixes the recording into interpretable components (interpretable in the sense of \citealp{lipton2018mythos}: each component is read as a thing in the world) is read as recovering something close to the generators of cognition \citep{makeig1996ica,michel2019eeg,hyvarinen2016tcl,halva2021snica}.
 
 \begin{figure*}[t]
   \centering
